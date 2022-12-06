@@ -1,5 +1,6 @@
 using MysqlToFirebird.Conexao;
-using MysqlToFirebird.Itens;
+using SqlServerToFirebird.Conexao;
+using SqlServerToFirebird.Itens;
 
 namespace MysqlToFirebird
 {
@@ -11,13 +12,13 @@ namespace MysqlToFirebird
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
-            var dadosMysql = new SMysql
+            var dadosMysql = new SSqlServer
             {
                 DataSource = txtMsqlDatasource.Text,
                 UserName = txtMsqlUsername.Text,
                 Database = txtMsqlDatabase.Text
             };
-            var strConnMysql = ConexaoMySql.Instance.GetStringConnection(dadosMysql);
+            var strConnMysql = ConexaoSqlServer.Instance.GetStringConnection(dadosMysql);
 
             var dadosFirebird = new SFirebird
             {

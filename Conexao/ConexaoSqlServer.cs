@@ -1,11 +1,11 @@
-﻿namespace MysqlToFirebird.Conexao
+﻿namespace SqlServerToFirebird.Conexao
 {
-    internal class ConexaoMySql
+    internal class ConexaoSqlServer
     {
-        private ConexaoMySql() { }
-        private static ConexaoMySql? _instance;
-        public static ConexaoMySql Instance => _instance ??= new ConexaoMySql();
-        internal string GetStringConnection(SMysql dados)
+        private ConexaoSqlServer() { }
+        private static ConexaoSqlServer? _instance;
+        public static ConexaoSqlServer Instance => _instance ??= new ConexaoSqlServer();
+        internal string GetStringConnection(SSqlServer dados)
         {
             return $"DATASOURCE={dados.DataSource};" + //ip
                    $"USERNAME={dados.UserName};" +
@@ -14,7 +14,7 @@
                    "CONVERT ZERO DATETIME=True";
         }
     }
-    public struct SMysql
+    public struct SSqlServer
     {
         public string DataSource { get; set; }
         public string UserName { get; set; }

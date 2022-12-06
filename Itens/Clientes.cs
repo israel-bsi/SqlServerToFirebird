@@ -1,7 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using FirebirdSql.Data.FirebirdClient;
 
-namespace MysqlToFirebird.Itens
+namespace SqlServerToFirebird.Itens
 {
     internal class Clientes
     {
@@ -10,9 +10,9 @@ namespace MysqlToFirebird.Itens
         public static Clientes Instance => _instance ??= new Clientes();
         internal void GetClientes(string strConnMySql, string strConnFirebird)
         {
-            using (var conn = new MySqlConnection(strConnMySql))
+            using (var conn = new SqlConnection(strConnMySql))
             {
-                using (var cmd = new MySqlCommand())
+                using (var cmd = new SqlCommand())
                 {
                     //get dados
                 }
