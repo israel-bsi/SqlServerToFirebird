@@ -12,12 +12,20 @@ namespace SqlServerToFirebird.Itens
         {
             using (var conn = new SqlConnection(strConnMySql))
             {
-                using (var cmd = new SqlCommand())
+                using (var cmd = new SqlCommand("", conn))
                 {
-                    //get dados
+                    cmd.CommandText = "";
+                    cmd.Connection.Open();
+                    using (var dados = cmd.ExecuteReader())
+                    {
+                        if (dados.HasRows)
+                        {
+                            dados.Read();
+                        }
+                    }
                 }
             }
-            SendDados(strConnFirebird);
+            //SendDados(strConnFirebird);
         }
         internal void SendDados(string strConnFirebird)
         {
@@ -28,6 +36,23 @@ namespace SqlServerToFirebird.Itens
                     //send dados
                 }
             }
+        }
+        struct SClientes
+        {
+            internal string CodCli { get; set; }
+            internal string NomCli { get; set; }
+            internal string CicCli { get; set; }
+            internal string CepCli { get; set; }
+            internal string FonCli { get; set; }
+            internal string FaxCli { get; set; }
+            internal string DatCad { get; set; }
+            internal string DtuAtu { get; set; }
+            internal string EstCli { get; set; }
+            internal string CidCli { get; set; }
+            internal string BaiCli { get; set; }
+            internal string EndCli { get; set; }
+            internal string EndNum { get; set; }
+            internal string NomFan { get; set; }
         }
     }
 }
