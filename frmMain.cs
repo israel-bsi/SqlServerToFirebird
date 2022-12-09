@@ -4,30 +4,47 @@ using SqlServerToFirebird.Itens;
 
 namespace SqlServerToFirebird
 {
-    public partial class frmMain : Form
+    public partial class FrmMain : Form
     {
-        public frmMain()
+        public FrmMain()
         {
             InitializeComponent();
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
+            //var dadosSqlServer = new SSqlServer
+            //{
+            //    ServerName = txtSqlServerDatasource.Text,
+            //    Database = txtSqlServerDatabase.Text
+            //};
             var dadosSqlServer = new SSqlServer
             {
-                ServerName = txtSqlServerDatasource.Text,
-                Database = txtSqlServerDatabase.Text
+                ServerName = @"localhost\SQLEXPRESS",
+                Database = "D33Q8TG575OEBYV7U5VS"
             };
             var strConnSqlServer = ConexaoSqlServer.Instance.GetStringConnection(dadosSqlServer);
 
+            //var dadosFirebird = new SFirebird
+            //{
+            //    Database = txtFbDataBase.Text
+            //    DataSource = txtFbDataSource.Text
+            //};
             var dadosFirebird = new SFirebird
             {
-                Database = txtFbDataBase.Text
+                Database = @"C:\Sistemas\Sge\Dados\DB_SGE.FDB",
+                DataSource = "localhost"
             };
             var strConnFirebird = ConexaoFirebird.Instance.GetStringConnection(dadosFirebird);
 
-            Clientes.Instance.GetClientes(strConnSqlServer, strConnFirebird);
+            progressbar.Maximum = 3;
+            //Clientes.Instance.GetClientes(strConnSqlServer, strConnFirebird);
+            progressbar.Value = 1;
             //Produtos.Instance.GetProdutos(strConnSqlServer, strConnFirebird);
-            //Fornecedor.Instance.GetFornecedor(strConnSqlServer, strConnFirebird);
+            progressbar.Value = 2;
+            Fornecedor.Instance.GetFornecedor(strConnSqlServer, strConnFirebird);
+            progressbar.Value = 3;
+            Thread.Sleep(2000);
+            lblStatus.Text = "Concluido";
         }
     }
 }

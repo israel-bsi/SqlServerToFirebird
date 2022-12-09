@@ -9,7 +9,8 @@
         {
             return "User=SYSDBA;" +
                    "Password=masterkey;" +
-                   $"Database={dados.Database};" +
+                   $"Database={dados.Database};"+
+                   $"DataSource={dados.DataSource};"+
                    "MaxPoolSize=250;" +
                    "Port=3050;" +
                    "Charset=WIN1252";
@@ -18,5 +19,6 @@
     public struct SFirebird
     {
         public string Database { get; set; }
+        public string DataSource { get; set; }
     }
 }

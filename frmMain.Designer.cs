@@ -1,6 +1,6 @@
 ﻿namespace SqlServerToFirebird
 {
-    partial class frmMain
+    partial class FrmMain
     {
         /// <summary>
         ///  Required designer variable.
@@ -38,11 +38,14 @@
             this.txtSqlServerDatasource = new System.Windows.Forms.TextBox();
             this.lblSqlServerDatabase = new System.Windows.Forms.Label();
             this.txtSqlServerDatabase = new System.Windows.Forms.TextBox();
+            this.lblfbDataSource = new System.Windows.Forms.Label();
+            this.txtFbDataSource = new System.Windows.Forms.TextBox();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(148, 266);
+            this.btnStart.Location = new System.Drawing.Point(148, 318);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(84, 31);
             this.btnStart.TabIndex = 0;
@@ -52,7 +55,7 @@
             // 
             // progressbar
             // 
-            this.progressbar.Location = new System.Drawing.Point(10, 239);
+            this.progressbar.Location = new System.Drawing.Point(12, 267);
             this.progressbar.Name = "progressbar";
             this.progressbar.Size = new System.Drawing.Size(363, 21);
             this.progressbar.TabIndex = 1;
@@ -71,7 +74,7 @@
             // 
             this.lblSqlServer.AutoSize = true;
             this.lblSqlServer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblSqlServer.Location = new System.Drawing.Point(10, 88);
+            this.lblSqlServer.Location = new System.Drawing.Point(12, 131);
             this.lblSqlServer.Name = "lblSqlServer";
             this.lblSqlServer.Size = new System.Drawing.Size(83, 21);
             this.lblSqlServer.TabIndex = 4;
@@ -79,7 +82,7 @@
             // 
             // txtFbDataBase
             // 
-            this.txtFbDataBase.Location = new System.Drawing.Point(10, 52);
+            this.txtFbDataBase.Location = new System.Drawing.Point(12, 52);
             this.txtFbDataBase.Name = "txtFbDataBase";
             this.txtFbDataBase.Size = new System.Drawing.Size(363, 23);
             this.txtFbDataBase.TabIndex = 5;
@@ -96,7 +99,7 @@
             // lblDataSourceSqlServer
             // 
             this.lblDataSourceSqlServer.AutoSize = true;
-            this.lblDataSourceSqlServer.Location = new System.Drawing.Point(10, 114);
+            this.lblDataSourceSqlServer.Location = new System.Drawing.Point(12, 157);
             this.lblDataSourceSqlServer.Name = "lblDataSourceSqlServer";
             this.lblDataSourceSqlServer.Size = new System.Drawing.Size(73, 15);
             this.lblDataSourceSqlServer.TabIndex = 8;
@@ -104,7 +107,7 @@
             // 
             // txtSqlServerDatasource
             // 
-            this.txtSqlServerDatasource.Location = new System.Drawing.Point(10, 132);
+            this.txtSqlServerDatasource.Location = new System.Drawing.Point(12, 175);
             this.txtSqlServerDatasource.Name = "txtSqlServerDatasource";
             this.txtSqlServerDatasource.Size = new System.Drawing.Size(363, 23);
             this.txtSqlServerDatasource.TabIndex = 7;
@@ -112,7 +115,7 @@
             // lblSqlServerDatabase
             // 
             this.lblSqlServerDatabase.AutoSize = true;
-            this.lblSqlServerDatabase.Location = new System.Drawing.Point(10, 170);
+            this.lblSqlServerDatabase.Location = new System.Drawing.Point(12, 213);
             this.lblSqlServerDatabase.Name = "lblSqlServerDatabase";
             this.lblSqlServerDatabase.Size = new System.Drawing.Size(58, 15);
             this.lblSqlServerDatabase.TabIndex = 12;
@@ -120,16 +123,43 @@
             // 
             // txtSqlServerDatabase
             // 
-            this.txtSqlServerDatabase.Location = new System.Drawing.Point(10, 188);
+            this.txtSqlServerDatabase.Location = new System.Drawing.Point(12, 231);
             this.txtSqlServerDatabase.Name = "txtSqlServerDatabase";
             this.txtSqlServerDatabase.Size = new System.Drawing.Size(363, 23);
             this.txtSqlServerDatabase.TabIndex = 11;
             // 
-            // frmMain
+            // lblfbDataSource
+            // 
+            this.lblfbDataSource.AutoSize = true;
+            this.lblfbDataSource.Location = new System.Drawing.Point(12, 78);
+            this.lblfbDataSource.Name = "lblfbDataSource";
+            this.lblfbDataSource.Size = new System.Drawing.Size(73, 15);
+            this.lblfbDataSource.TabIndex = 14;
+            this.lblfbDataSource.Text = "Data Source:";
+            // 
+            // txtFbDataSource
+            // 
+            this.txtFbDataSource.Location = new System.Drawing.Point(12, 96);
+            this.txtFbDataSource.Name = "txtFbDataSource";
+            this.txtFbDataSource.Size = new System.Drawing.Size(363, 23);
+            this.txtFbDataSource.TabIndex = 13;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(160, 293);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 15);
+            this.lblStatus.TabIndex = 15;
+            // 
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 303);
+            this.ClientSize = new System.Drawing.Size(381, 361);
+            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.lblfbDataSource);
+            this.Controls.Add(this.txtFbDataSource);
             this.Controls.Add(this.lblSqlServerDatabase);
             this.Controls.Add(this.txtSqlServerDatabase);
             this.Controls.Add(this.lblDataSourceSqlServer);
@@ -140,7 +170,7 @@
             this.Controls.Add(this.lblFirebird);
             this.Controls.Add(this.progressbar);
             this.Controls.Add(this.btnStart);
-            this.Name = "frmMain";
+            this.Name = "FrmMain";
             this.Text = "SqlServerToFirebird";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -159,5 +189,8 @@
         private TextBox txtSqlServerDatasource;
         private Label lblSqlServerDatabase;
         private TextBox txtSqlServerDatabase;
+        private Label lblfbDataSource;
+        private TextBox txtFbDataSource;
+        private Label lblStatus;
     }
 }

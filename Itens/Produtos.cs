@@ -3,7 +3,7 @@ using FirebirdSql.Data.FirebirdClient;
 
 namespace SqlServerToFirebird.Itens
 {
-    internal class Produtos
+    internal class Produtos : Support
     {
         private Produtos() { }
         private static Produtos? _instance;
@@ -19,7 +19,7 @@ namespace SqlServerToFirebird.Itens
             }
             SendDados(strConnFirebird);
         }
-        internal void SendDados(string strConnFirebird)
+        private static void SendDados(string strConnFirebird)
         {
             using (var conn = new FbConnection(strConnFirebird))
             {
@@ -28,6 +28,18 @@ namespace SqlServerToFirebird.Itens
                     //send dados
                 }
             }
+        }
+        internal struct SProdutos
+        {
+            public string? CodPrd { get; set; }
+            public string? DesPrd { get; set; }
+            public string? RefPrd { get; set; }
+            public string? CodUnd { get; set; }
+            public string? SitPrd { get; set; }
+            public string? DatAtu { get; set; }
+            public string? PrdNcm { get; set; }
+            public string? CodBar { get; set; }
+            public string? MovEst { get; set; }
         }
     }
 }
