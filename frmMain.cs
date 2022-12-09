@@ -31,7 +31,8 @@ namespace SqlServerToFirebird
             //};
             var dadosFirebird = new SFirebird
             {
-                Database = @"C:\Sistemas\Sge\Dados\DB_SGE.FDB",
+                //Database = @"C:\Sistemas\Sge\Dados\DB_SGE.FDB",
+                Database = @"D:\Bancos\HDias.FDB",
                 DataSource = "localhost"
             };
             var strConnFirebird = ConexaoFirebird.Instance.GetStringConnection(dadosFirebird);
@@ -39,9 +40,9 @@ namespace SqlServerToFirebird
             progressbar.Maximum = 3;
             //Clientes.Instance.GetClientes(strConnSqlServer, strConnFirebird);
             progressbar.Value = 1;
-            //Produtos.Instance.GetProdutos(strConnSqlServer, strConnFirebird);
+            Produtos.Instance.GetProdutos(strConnSqlServer, strConnFirebird);
             progressbar.Value = 2;
-            Fornecedor.Instance.GetFornecedor(strConnSqlServer, strConnFirebird);
+            //Fornecedor.Instance.GetFornecedor(strConnSqlServer, strConnFirebird);
             progressbar.Value = 3;
             Thread.Sleep(2000);
             lblStatus.Text = "Concluido";
