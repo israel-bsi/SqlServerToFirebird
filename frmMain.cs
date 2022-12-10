@@ -38,11 +38,11 @@ namespace SqlServerToFirebird
             var strConnFirebird = ConexaoFirebird.Instance.GetStringConnection(dadosFirebird);
 
             progressbar.Maximum = 3;
-            //Clientes.Instance.GetClientes(strConnSqlServer, strConnFirebird);
-            progressbar.Value = 1;
-            Produtos.Instance.GetProdutos(strConnSqlServer, strConnFirebird);
-            progressbar.Value = 2;
             //Fornecedor.Instance.GetFornecedor(strConnSqlServer, strConnFirebird);
+            progressbar.Value = 1;
+            //Clientes.Instance.GetClientes(strConnSqlServer, strConnFirebird);
+            progressbar.Value = 2;
+            Produtos.Instance.GetProdutos(strConnSqlServer, strConnFirebird);
             progressbar.Value = 3;
             Thread.Sleep(2000);
             lblStatus.Text = "Concluido";

@@ -46,5 +46,9 @@ namespace SqlServerToFirebird.Itens
             }
             return pessoa;
         }
+        internal static string RetornaTrintaChar(string texto)
+        {
+            return texto.Length > 30 ? texto[..30] : texto;
+        }
     }
 }
