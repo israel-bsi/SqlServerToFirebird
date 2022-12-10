@@ -40,12 +40,11 @@
             this.txtSqlServerDatabase = new System.Windows.Forms.TextBox();
             this.lblfbDataSource = new System.Windows.Forms.Label();
             this.txtFbDataSource = new System.Windows.Forms.TextBox();
-            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(148, 318);
+            this.btnStart.Location = new System.Drawing.Point(148, 299);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(84, 31);
             this.btnStart.TabIndex = 0;
@@ -74,7 +73,7 @@
             // 
             this.lblSqlServer.AutoSize = true;
             this.lblSqlServer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblSqlServer.Location = new System.Drawing.Point(12, 131);
+            this.lblSqlServer.Location = new System.Drawing.Point(12, 140);
             this.lblSqlServer.Name = "lblSqlServer";
             this.lblSqlServer.Size = new System.Drawing.Size(83, 21);
             this.lblSqlServer.TabIndex = 4;
@@ -82,7 +81,7 @@
             // 
             // txtFbDataBase
             // 
-            this.txtFbDataBase.Location = new System.Drawing.Point(12, 52);
+            this.txtFbDataBase.Location = new System.Drawing.Point(12, 96);
             this.txtFbDataBase.Name = "txtFbDataBase";
             this.txtFbDataBase.Size = new System.Drawing.Size(363, 23);
             this.txtFbDataBase.TabIndex = 5;
@@ -90,7 +89,7 @@
             // lblFbDatabase
             // 
             this.lblFbDatabase.AutoSize = true;
-            this.lblFbDatabase.Location = new System.Drawing.Point(10, 34);
+            this.lblFbDatabase.Location = new System.Drawing.Point(10, 78);
             this.lblFbDatabase.Name = "lblFbDatabase";
             this.lblFbDatabase.Size = new System.Drawing.Size(58, 15);
             this.lblFbDatabase.TabIndex = 6;
@@ -99,7 +98,7 @@
             // lblDataSourceSqlServer
             // 
             this.lblDataSourceSqlServer.AutoSize = true;
-            this.lblDataSourceSqlServer.Location = new System.Drawing.Point(12, 157);
+            this.lblDataSourceSqlServer.Location = new System.Drawing.Point(12, 165);
             this.lblDataSourceSqlServer.Name = "lblDataSourceSqlServer";
             this.lblDataSourceSqlServer.Size = new System.Drawing.Size(73, 15);
             this.lblDataSourceSqlServer.TabIndex = 8;
@@ -107,7 +106,7 @@
             // 
             // txtSqlServerDatasource
             // 
-            this.txtSqlServerDatasource.Location = new System.Drawing.Point(12, 175);
+            this.txtSqlServerDatasource.Location = new System.Drawing.Point(12, 183);
             this.txtSqlServerDatasource.Name = "txtSqlServerDatasource";
             this.txtSqlServerDatasource.Size = new System.Drawing.Size(363, 23);
             this.txtSqlServerDatasource.TabIndex = 7;
@@ -131,33 +130,24 @@
             // lblfbDataSource
             // 
             this.lblfbDataSource.AutoSize = true;
-            this.lblfbDataSource.Location = new System.Drawing.Point(12, 78);
+            this.lblfbDataSource.Location = new System.Drawing.Point(12, 33);
             this.lblfbDataSource.Name = "lblfbDataSource";
             this.lblfbDataSource.Size = new System.Drawing.Size(73, 15);
-            this.lblfbDataSource.TabIndex = 14;
+            this.lblfbDataSource.TabIndex = 16;
             this.lblfbDataSource.Text = "Data Source:";
             // 
             // txtFbDataSource
             // 
-            this.txtFbDataSource.Location = new System.Drawing.Point(12, 96);
+            this.txtFbDataSource.Location = new System.Drawing.Point(12, 51);
             this.txtFbDataSource.Name = "txtFbDataSource";
             this.txtFbDataSource.Size = new System.Drawing.Size(363, 23);
-            this.txtFbDataSource.TabIndex = 13;
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(160, 293);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 15);
-            this.lblStatus.TabIndex = 15;
+            this.txtFbDataSource.TabIndex = 15;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 361);
-            this.Controls.Add(this.lblStatus);
+            this.ClientSize = new System.Drawing.Size(381, 338);
             this.Controls.Add(this.lblfbDataSource);
             this.Controls.Add(this.txtFbDataSource);
             this.Controls.Add(this.lblSqlServerDatabase);
@@ -191,6 +181,5 @@
         private TextBox txtSqlServerDatabase;
         private Label lblfbDataSource;
         private TextBox txtFbDataSource;
-        private Label lblStatus;
     }
 }

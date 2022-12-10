@@ -66,7 +66,7 @@ namespace SqlServerToFirebird.Itens
                                     PrdNcm = dados["PRD_PRDNCM"].ToString(),
                                     CodBar = dados["PRD_CODBAR"].ToString(),
                                     MovEst = dados["PRD_MOVEST"].ToString(),
-                                    CodGrp = dados["PRD_CODGRP"].ToString()?[3..],
+                                    CodGrp = dados["PRD_CODGRP"].ToString()?[3..]
                                 };
                                 ListaProdutos?.Add(prod);
                             }
@@ -76,7 +76,7 @@ namespace SqlServerToFirebird.Itens
                 }
                 GravaProdutos();
                 GravaProdutoUf();
-                //GravaVwCodAux();
+                GravaCodBarra();
             }
             //Preços
             using (var conn = new SqlConnection(strConnSqlServer))
@@ -216,7 +216,7 @@ namespace SqlServerToFirebird.Itens
                 }
             }
         }
-        private static void GravaVwCodAux()
+        private static void GravaCodBarra()
         {
             using (var conn = new FbConnection(_strConnFirebird))
             {
@@ -272,7 +272,6 @@ namespace SqlServerToFirebird.Itens
         }
         private static string InsertProdutos(SProdutos prod)
         {
-            var est = GetQtdEst(prod.CodPrd);
             return "Insert into tb_mate" +
                    "(MAT_CODI, MAT_DESC, MAT_DESR, MAT_UNID, MAT_CDFR," +
                    "MAT_CDSE, MAT_CDGR, MAT_CDSG, MAT_PESA, MAT_ATAC, MAT_MEDI, MAT_EMIN, MAT_EMAX, MAT_ESTG," +
@@ -300,30 +299,25 @@ namespace SqlServerToFirebird.Itens
         }
         private static string InsertVwCodAux(SProdutos prod)
         {
-            var codbar = string.IsNullOrEmpty(prod.CodBar) ? prod.CodPrd?.PadLeft(13, '0') : prod.CodBar;
-            return "update or insert into vw_prod_cdaux" +
-                   "(vw_codi, vw_cdmt, vw_desc, vw_desr, vw_unid, vw_flag," +
-                   "vw_dcad, vw_dalt, vw_pesob, vw_pesol, vw_embc, vw_categoria," +
-                   "vw_grupo, vw_subgrupo, vw_embalagem)" +
+            var codbar = string.IsNullOrEmpty(prod.CodBar) ? prod.CodPrd?.PadLeft(14, '0') : prod.CodBar;
+            return "update or insert into tb_mat_cdaux" +
+                   "(maux_codi, maux_cdmt, maux_embalagem)" +
                    "values" +
-                   $"('{codbar}', '{prod.CodPrd}', '{prod.DesPrd}', '{prod.DesPrd}', '{prod.CodUnd}', 'S'," +
-                   $"CAST('{prod.DatAtu}' AS TIMESTAMP), CAST('{prod.DatAtu}' AS TIMESTAMP), 0, 0, 1, '{prod.CodGrp}', '000'," +
-                   "'000','','N')" +
-                   "matching (vw_cdmt)";
+                   $"('{codbar}', '{prod.CodPrd}', 'N')";
         }
         private struct SProdutos
         {
-            internal string? CodPrd { get; set; }
-            internal string? DesPrd { get; set; }
-            internal string? RefPrd { get; set; }
-            internal string? CodUnd { get; set; }
-            internal string? DatAtu { get; set; }
-            internal string? PrdNcm { get; set; }
-            internal string? CodBar { get; set; }
+            internal string? CodPrd { get; init; }
+            internal string? DesPrd { get; init; }
+            internal string? RefPrd { get; init; }
+            internal string? CodUnd { get; init; }
+            internal string? DatAtu { get; init; }
+            internal string? PrdNcm { get; init; }
+            internal string? CodBar { get; init; }
             internal string? MovEst { get; set; }
-            internal string? CodTpv { get; set; }
-            internal string? PreVen { get; set; }
-            internal string? CodGrp { get; set; }
+            internal string? CodTpv { get; init; }
+            internal string? PreVen { get; init; }
+            internal string? CodGrp { get; init; }
         }
         private struct SCategorias
         {
