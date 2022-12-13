@@ -1,6 +1,4 @@
-using SqlServerToFirebird;
-
-namespace MysqlToFirebird
+namespace ImportaDadosSGE
 {
     internal static class Program
     {

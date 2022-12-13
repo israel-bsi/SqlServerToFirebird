@@ -1,4 +1,4 @@
-﻿namespace MysqlToFirebird.Conexao
+﻿namespace ImportaDadosSGE.Conexao
 {
     internal class ConexaoFirebird
     {

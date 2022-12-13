@@ -1,7 +1,7 @@
-﻿using FirebirdSql.Data.FirebirdClient;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
+using FirebirdSql.Data.FirebirdClient;
 
-namespace SqlServerToFirebird.Itens
+namespace ImportaDadosSGE.Itens
 {
     internal class Fornecedor : Support
     {

@@ -1,4 +1,4 @@
-﻿namespace SqlServerToFirebird
+﻿namespace ImportaDadosSGE
 {
     partial class FrmMain
     {

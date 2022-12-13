@@ -2,13 +2,13 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SqlServerToFirebird.Itens
+namespace ImportaDadosSGE.Itens
 {
     internal class Support
     {
         internal static string RemoveAcento(string? texto)
         {
-            var encodeEightBit = Encoding.GetEncoding(1251).GetBytes(texto);
+            var encodeEightBit = Encoding.GetEncoding(1251).GetBytes(texto ?? string.Empty);
             var stringSevenBits = Encoding.ASCII.GetString(encodeEightBit);
             var regex = new Regex("[^a-zA-Z0-9]=-_/");
             return regex.Replace(stringSevenBits, " ").ToUpper();

@@ -1,4 +1,4 @@
-﻿namespace SqlServerToFirebird.Conexao
+﻿namespace ImportaDadosSGE.Conexao
 {
     internal class ConexaoSqlServer
     {

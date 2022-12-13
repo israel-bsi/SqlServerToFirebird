@@ -1,8 +1,7 @@
-using MysqlToFirebird.Conexao;
-using SqlServerToFirebird.Conexao;
-using SqlServerToFirebird.Itens;
+using ImportaDadosSGE.Conexao;
+using ImportaDadosSGE.Itens;
 
-namespace SqlServerToFirebird
+namespace ImportaDadosSGE
 {
     public partial class FrmMain : Form
     {
@@ -42,7 +41,7 @@ namespace SqlServerToFirebird
             progressbar.Value = 1;
             Clientes.Instance.GetClientes(strConnSqlServer, strConnFirebird);
             progressbar.Value = 2;
-            Produtos.Instance.GetProdutos(strConnSqlServer, strConnFirebird);
+            Produtos.Instance.StartProdutos(strConnSqlServer, strConnFirebird);
             progressbar.Value = 3;
             Thread.Sleep(2000);
             MessageBox.Show("Importação Concluída", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
