@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
 using FirebirdSql.Data.FirebirdClient;
+// ReSharper disable UseObjectOrCollectionInitializer
 
 namespace ImportaDadosSGE.Itens
 {
@@ -7,14 +8,23 @@ namespace ImportaDadosSGE.Itens
     {
         private Clientes() { }
         private static Clientes? _instance;
+        private static readonly List<SClientes> ListaClientes = new();
         public static Clientes Instance => _instance ??= new Clientes();
-        internal void GetClientes(string strConnMySql, string strConnFirebird)
+        internal void StartClientes()
         {
-            var clientes = new List<SClientes>();
-            using (var conn = new SqlConnection(strConnMySql))
+            GetClientes();
+            GravaClientes();
+        }
+        private static void GetClientes()
+        {
+            using (var conn = new SqlConnection(StrConexao.StrConnSqlServer))
             {
-                using (var cmd = new SqlCommand("SELECT * FROM INTCLI", conn))
+                using (var cmd = new SqlCommand("", conn))
                 {
+                    cmd.CommandText = "SELECT Cli_CicCli, Cli_NomCli, Cli_NomFan, Cli_EndCli, Cli_EndNum, Cli_BaiCli, Cli_CidCli," +
+                                      "Cli_EstCli, Cli_CepCli, Cli_FonCli, Cli_FaxCli, Cli_CelCli, Cli_DatCad, Cli_DtuAtu," +
+                                      "Cli_CodCli, Cli_CodMun, Fcl_TipFic, Fcl_InsEst FROM IntCli " +
+                                      "JOIN IntFcl on Cli_CicCli  = Fcl_CicCli";
                     cmd.Connection.Open();
                     using (var dados = cmd.ExecuteReader())
                     {
@@ -22,40 +32,39 @@ namespace ImportaDadosSGE.Itens
                         {
                             while (dados.Read())
                             {
-                                var cli = new SClientes
-                                {
-                                    CodCli = dados["CLI_CODCLI"].ToString()?.PadLeft(5, '0'),
-                                    NomCli = RemoveAcento(dados["CLI_NOMCLI"].ToString()),
-                                    CicCli = dados["CLI_CICCLI"].ToString(),
-                                    CepCli = dados["CLI_CEPCLI"].ToString(),
-                                    FonCli = dados["CLI_FONCLI"].ToString(),
-                                    FaxCli = dados["CLI_FAXCLI"].ToString(),
-                                    DatCad = GetDataAammdd(dados["CLI_DATCAD"].ToString()),
-                                    DtuAtu = GetDataAammdd(dados["CLI_DTUATU"].ToString()),
-                                    EstCli = dados["CLI_ESTCLI"].ToString(),
-                                    CidCli = RemoveAcento(dados["CLI_CIDCLI"].ToString()),
-                                    BaiCli = RemoveAcento(dados["CLI_BAICLI"].ToString()),
-                                    EndCli = RemoveAcento(dados["CLI_ENDCLI"].ToString()),
-                                    EndNum = RemoveAcento(dados["CLI_ENDNUM"].ToString()),
-                                    NomFan = RemoveAcento(dados["CLI_NOMFAN"].ToString()),
-                                    CodTcl = dados["CLI_CODTCL"].ToString()
-                                };
-                                clientes.Add(cli);
+                                var cli = new SClientes();
+                                cli.CodCli = dados["CLI_CODCLI"].ToString()?.PadLeft(5, '0');
+                                cli.NomCli = RemoveAcento(dados["CLI_NOMCLI"].ToString());
+                                cli.CepCli = dados["CLI_CEPCLI"].ToString();
+                                cli.FonCli = dados["CLI_FONCLI"].ToString();
+                                cli.FaxCli = dados["CLI_FAXCLI"].ToString();
+                                cli.DatCad = GetDataAammdd(dados["CLI_DATCAD"].ToString());
+                                cli.DtuAtu = GetDataAammdd(dados["CLI_DTUATU"].ToString());
+                                cli.EstCli = dados["CLI_ESTCLI"].ToString();
+                                cli.CidCli = RemoveAcento(dados["CLI_CIDCLI"].ToString());
+                                cli.BaiCli = RemoveAcento(dados["CLI_BAICLI"].ToString());
+                                cli.EndCli = RemoveAcento(dados["CLI_ENDCLI"].ToString());
+                                cli.EndNum = RemoveAcento(dados["CLI_ENDNUM"].ToString());
+                                cli.NomFan = RemoveAcento(dados["CLI_NOMFAN"].ToString());
+                                cli.CliTipo = dados["FCL_TIPFIC"].ToString();
+                                cli.CicCli = FormataParaCpfSeFisico(cli.CliTipo, dados["CLI_CICCLI"].ToString());
+                                cli.InsEst = dados["FCL_INSEST"].ToString();
+                                cli.CodMun = dados["CLI_CODMUN"].ToString();
+                                ListaClientes?.Add(cli);
                             }
                         }
                     }
                 }
             }
-            SendDados(strConnFirebird, clientes);
         }
-        private static void SendDados(string strConnFirebird, List<SClientes> clientes)
+        private static void GravaClientes()
         {
-            using (var conn = new FbConnection(strConnFirebird))
+            using (var conn = new FbConnection(StrConexao.StrConnFirebird))
             {
                 using (var cmd = new FbCommand("", conn))
                 {
                     cmd.Connection.Open();
-                    foreach (var cli in clientes)
+                    foreach (var cli in ListaClientes)
                     {
                         cmd.CommandText = string.Empty;
                         cmd.CommandText = InsertClientes(cli);
@@ -84,6 +93,20 @@ namespace ImportaDadosSGE.Itens
         private static string InsertClientes(SClientes cli)
         {
             var logr = cli.EndCli + "," + cli.EndNum;
+            string? cpf = "", cnpj = "", ie = "";
+            switch (cli.CliTipo)
+            {
+                case "F":
+                    cpf = cli.CicCli;
+                    cnpj = "";
+                    ie = "";
+                    break;
+                case "J":
+                    cpf = "";
+                    cnpj = cli.CicCli;
+                    ie = cli.InsEst;
+                    break;
+            }
             return "UPDATE OR INSERT INTO TB_CLIE" +
                    "(CLI_CODI,CLI_NOME,CLI_CONT,CLI_PESS,CLI_CDZN,CLI_CPF,CLI_CGC,CLI_CGF," +
                    "CLI_CEP,CLI_CEND,CLI_FONE,CLI_FAX,CLI_GRUP,CLI_REND,CLI_LIMC,CLI_SALD,CLI_DNAS,CLI_DCAD,CLI_DALT," +
@@ -91,21 +114,19 @@ namespace ImportaDadosSGE.Itens
                    "CLI_TABPREC,CLI_PLAN,CLI_ACRES,CLI_CEPENT,CLI_UFENT,CLI_LOCALENT,CLI_BAIRENT,CLI_LOGRENT,CLI_CENDENT," +
                    "CLI_CEPCOB,CLI_UFCOB,CLI_LOCALCOB,CLI_BAIRCOB,CLI_LOGRCOB,CLI_CENDCOB,CLI_PCOMI,CLI_TPPG,CLI_DIAPG,CLI_FCOM," +
                    "CLI_SITUAC,CLI_NOME2,CLI_CDPG,CLI_DIAMES,CLI_CARENCIA,CLI_PJURO,CLI_PMULTA,CLI_FSEG," +
-                   "CLI_FTER,CLI_FQUA,CLI_FQUI,CLI_FSEX,CLI_FSAB,CLI_CDGE,CLI_ESTCIV,CLI_PAIS)" +
+                   "CLI_FTER,CLI_FQUA,CLI_FQUI,CLI_FSEX,CLI_FSAB,CLI_CDGE,CLI_ESTCIV,CLI_PAIS,CLI_CODMUNICIPIO)" +
                    "VALUES" +
-                   $"('{cli.CodCli}','{cli.NomCli}','','{GetTipoPessoa(cli.CodTcl)}','','{cli.CicCli}','',''," +
+                   $"('{cli.CodCli}','{cli.NomCli}','','{cli.CliTipo}','','{cpf}','{cnpj}','{ie}'," +
                    $"'{cli.CepCli}','.','{cli.FonCli}','{cli.FaxCli}','000',0," +
                    $"200,0,CAST('{cli.DatCad}' AS TIMESTAMP),CAST('{cli.DatCad}' AS TIMESTAMP),'{cli.DtuAtu}'," +
                    $"'S','N','','','','','000',0,'{cli.EstCli}','{cli.CidCli}','{cli.BaiCli}','{logr}',''," +
                    $"'01','00',0,'{cli.CepCli}','{cli.EstCli}','{cli.CidCli}','{cli.BaiCli}','{logr}','.'," +
                    $"'{cli.CepCli}','{cli.EstCli}','{cli.CidCli}','{cli.BaiCli}','{logr}','.',0,0,0,'N'," +
                    $"1,'{cli.NomFan}','01',0,0,0,0,'S'," +
-                   "'S','S','S','S','S','',0,1058)" +
+                   $"'S','S','S','S','S','',0,1058,'{cli.CodMun}')" +
                    "MATCHING (CLI_CODI)";
-            //CLI_NOMEDOCAMPO
-            //CLI_CODCLI
         }
-        internal struct SClientes
+        private struct SClientes
         {
             internal string? CodCli { get; set; }
             internal string? NomCli { get; set; }
@@ -121,7 +142,9 @@ namespace ImportaDadosSGE.Itens
             internal string? EndCli { get; set; }
             internal string? EndNum { get; set; }
             internal string? NomFan { get; set; }
-            internal string? CodTcl { get; set; }
+            internal string? CliTipo { get; set; }
+            internal string? InsEst { get; set; }
+            internal string? CodMun { get; set; }
         }
     }
 }

@@ -7,18 +7,13 @@ namespace ImportaDadosSGE.Itens
     internal class Produtos : Support
     {
         private Produtos() { }
-        private static string? _strConnFirebird;
-        private static string? _strConnSqlServer;
         private static readonly List<SProdutos> ListaProdutos = new();
         private static readonly List<SPrecos> ListaPrecos = new();
         private static readonly List<SCategorias> Categorias = new();
         private static Produtos? _instance;
         public static Produtos Instance => _instance ??= new Produtos();
-        internal void StartProdutos(string strConnSqlServer, string strConnFirebird)
+        internal void StartProdutos()
         {
-            _strConnFirebird = strConnFirebird;
-            _strConnSqlServer = strConnSqlServer;
-
             //Categoria
             GetCategorias();
             GravaCategorias();
@@ -33,7 +28,7 @@ namespace ImportaDadosSGE.Itens
         }
         private static void GetCategorias()
         {
-            using (var conn = new SqlConnection(_strConnSqlServer))
+            using (var conn = new SqlConnection(StrConexao.StrConnSqlServer))
             {
                 using (var cmd = new SqlCommand("", conn))
                 {
@@ -59,7 +54,7 @@ namespace ImportaDadosSGE.Itens
         }
         private static void GravaCategorias()
         {
-            using (var conn = new FbConnection(_strConnFirebird))
+            using (var conn = new FbConnection(StrConexao.StrConnFirebird))
             {
                 using (var cmd = new FbCommand("", conn))
                 {
@@ -87,7 +82,7 @@ namespace ImportaDadosSGE.Itens
         }
         private static void GetProdutos()
         {
-            using (var conn = new SqlConnection(_strConnSqlServer))
+            using (var conn = new SqlConnection(StrConexao.StrConnSqlServer))
             {
                 using (var cmd = new SqlCommand("", conn))
                 {
@@ -119,7 +114,7 @@ namespace ImportaDadosSGE.Itens
         }
         private static void GravaProdutos()
         {
-            using (var conn = new FbConnection(_strConnFirebird))
+            using (var conn = new FbConnection(StrConexao.StrConnFirebird))
             {
                 using (var cmd = new FbCommand("", conn))
                 {
@@ -179,7 +174,7 @@ namespace ImportaDadosSGE.Itens
         }
         private static void GetPreco()
         {
-            using (var conn = new SqlConnection(_strConnSqlServer))
+            using (var conn = new SqlConnection(StrConexao.StrConnSqlServer))
             {
                 using (var cmd = new SqlCommand("", conn))
                 {
@@ -207,7 +202,7 @@ namespace ImportaDadosSGE.Itens
         }
         private static void GravaPreco()
         {
-            using (var conn = new FbConnection(_strConnFirebird))
+            using (var conn = new FbConnection(StrConexao.StrConnFirebird))
             {
                 using (var cmd = new FbCommand("", conn))
                 {
@@ -226,7 +221,7 @@ namespace ImportaDadosSGE.Itens
         private static void PreenchePrecVazio(string? cod)
         {
             var listaPrecSge = new List<SPrecos>();
-            using (var conn = new FbConnection(_strConnFirebird))
+            using (var conn = new FbConnection(StrConexao.StrConnFirebird))
             {
                 using (var cmd = new FbCommand("", conn))
                 {
@@ -276,7 +271,7 @@ namespace ImportaDadosSGE.Itens
         private static double GetQtdEst(string? codPrd)
         {
             double qntEst = 0;
-            using (var conn = new SqlConnection(_strConnSqlServer))
+            using (var conn = new SqlConnection(StrConexao.StrConnSqlServer))
             {
                 using (var cmd = new SqlCommand("", conn))
                 {

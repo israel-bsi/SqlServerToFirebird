@@ -21,7 +21,7 @@ namespace ImportaDadosSGE
             //    ServerName = @"localhost\SQLEXPRESS",
             //    Database = "D33Q8TG575OEBYV7U5VS"
             //};
-            var strConnSqlServer = ConexaoSqlServer.Instance.GetStringConnection(dadosSqlServer);
+            StrConexao.StrConnSqlServer = ConexaoSqlServer.Instance.GetStringConnection(dadosSqlServer);
 
             var dadosFirebird = new SFirebird
             {
@@ -34,14 +34,14 @@ namespace ImportaDadosSGE
             //    Database = @"D:\Bancos\HDias.FDB",
             //    DataSource = "localhost"
             //};
-            var strConnFirebird = ConexaoFirebird.Instance.GetStringConnection(dadosFirebird);
+            StrConexao.StrConnFirebird = ConexaoFirebird.Instance.GetStringConnection(dadosFirebird);
 
             progressbar.Maximum = 3;
-            Fornecedor.Instance.GetFornecedor(strConnSqlServer, strConnFirebird);
+            Fornecedores.Instance.StartFornecedores();
             progressbar.Value = 1;
-            Clientes.Instance.GetClientes(strConnSqlServer, strConnFirebird);
+            Clientes.Instance.StartClientes();
             progressbar.Value = 2;
-            Produtos.Instance.StartProdutos(strConnSqlServer, strConnFirebird);
+            Produtos.Instance.StartProdutos();
             progressbar.Value = 3;
             Thread.Sleep(2000);
             MessageBox.Show("Importação Concluída", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
